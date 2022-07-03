@@ -68,3 +68,15 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+# 메모
+
+### PropTypes 사용 관련 패키지 설치
+
+```bash
+npm i prop-types
+```
+
+### 컴포넌트별 css 파일 적용
+
+렌더링된 해당 html 소스 확인하면 랜덤한 class명이 발생 -> 노마드 코더는 좋은 기능이라고 함
