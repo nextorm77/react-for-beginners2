@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 
+// React.js 의 동작 방식
+// : state를 변화시키면 컴포넌트를 재실행
 function App() {
   const [counter, setValue] = useState(0);
   const [keyword, setKeyword] = useState("");
