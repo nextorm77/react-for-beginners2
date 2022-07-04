@@ -1,40 +1,43 @@
+import { func } from "prop-types";
 import { useState, useEffect } from "react";
 
-// React.js 의 동작 방식
+// React.js 의 기본 동작 방식
 // : state를 변화시키면 컴포넌트를 재실행
-function App() {
-  const [counter, setValue] = useState(0);
-  const [keyword, setKeyword] = useState("");
-  const onClick = () => setValue((prev) => prev + 1);
-  const onChange = (event) => setKeyword(event.target.value);
-  console.log("I run all the time.");
 
-  // 처음 렌더링할 때 대상 코드(콜백함수)를 실행
-  // 아무것도 watch하고 있지 않으므로 처음 렌더링시만 실행
+function Hello() {
+  // Cleanup 함수?
+  // 실제 필드에서 자주 사용하진 않음
+  // 아래는 설명 목적의 코딩
+  function byeFn() {
+    console.log("bye :(");
+  }
+  function hiFn() {
+    console.log("created :)");
+    return byeFn;
+  }
+
+  useEffect(hiFn, []);
+
+  /* 실제 코딩 방식
   useEffect(() => {
-    console.log("I run only once.");
+    console.log("created :)");
+
+    // Cleanup 함수
+    return () => console.log("detroyed :<");
   }, []);
-  // keyword의 state가 변화되어 렌더링할 때 대상 코드(콜백함수) 실행
-  // 내부 조건에 맞을 경우만 로그는 찍힘
-  useEffect(() => {
-    console.log("I run when 'keyword' changes.");
-  }, [keyword]);
-  useEffect(() => {
-    console.log("I run when 'counter' changes.");
-  }, [counter]);
-  useEffect(() => {
-    console.log("I run when keyword & counter change.");
-  }, [keyword, counter]);
+  */
+
+  return <h1>Hello</h1>;
+}
+
+// {showing ? <Hello /> : null} => <Hello />를 파괴하고(숨김X) 생성하는 효과
+function App() {
+  const [showing, setShowing] = useState(false);
+  const onClick = () => setShowing((prev) => !prev);
   return (
     <div>
-      <input
-        value={keyword}
-        onChange={onChange}
-        type="text"
-        placeholder="Search here..."
-      />
-      <h1>{counter}</h1>
-      <button onClick={onClick}>click me</button>
+      {showing ? <Hello /> : null}
+      <button onClick={onClick}>{showing ? "Hide" : "Show"}</button>
     </div>
   );
 }
