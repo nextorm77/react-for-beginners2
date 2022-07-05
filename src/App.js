@@ -2,58 +2,54 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [loading, setLoading] = useState(true);
-  const [coins, setCoins] = useState([]); // 오류 방지 차원에서 초기값 설정 필요
-  const [money, setMoney] = useState(0);
-  const onChange = (event) => setMoney(event.target.value);
-
+  const [movies, setMovies] = useState([]);
+  const getMovies = async () => {
+    const response = await fetch(
+      "https://yts.mx/api/v2/list_movies.json?minimum_rating=8.8&sort_by=year"
+    );
+    const json = await response.json();
+    setMovies(json.data.movies);
+    setLoading(false);
+  };
   useEffect(() => {
-    fetch("https://api.coinpaprika.com/v1/tickers")
+    /* 구 방식
+    fetch(
+      "https://yts.mx/api/v2/list_movies.json?minimum_rating=8.5&sort_by=year"
+    )
       .then((response) => response.json())
       .then((json) => {
-        // 성능을 위해 동시에 set~함수를 호출하면 1번의 리렌더링?
-        setCoins(json);
+        setMovies(json.data.movies);
         setLoading(false);
       });
+    */
+    // 신 방식
+    getMovies();
   }, []);
-  //console.log("here");
-  console.log(money);
+  console.log(movies);
+  // 요소를 태그로 감싼 배열(map함수 결과)을 자동으로 반복 렌더링?
   return (
     <div>
-      <h1>The Coins! {loading ? "" : `(${coins.length}건)`}</h1>
-      <input
-        value={money}
-        type="number"
-        placeholder="Input your money to buy coin"
-        onChange={onChange}
-      ></input>{" "}
-      USD
-      <br />
       {loading ? (
-        <strong>Loading...</strong>
+        <h1>Loading...</h1>
       ) : (
-        <select>
-          {coins.map((item, index) => (
-            <option key={item.id}>
-              {item.name} ({item.symbol}): {item.quotes.USD.price} USD
-            </option>
+        <div>
+          {movies.map((movie) => (
+            <div key={movie.id}>
+              <h2>{movie.title}</h2>
+              <img src={movie.medium_cover_image} />
+              <h3>genres</h3>
+              <ul>
+                {movie.genres.map((genre) => (
+                  <li key={genre}>{genre}</li>
+                ))}
+              </ul>
+              <p>{movie.summary}</p>
+            </div>
           ))}
-        </select>
-      )}
-      {loading ? (
-        ""
-      ) : (
-        <ul>
-          {coins.map((item, index) => (
-            <li key={index}>
-              {item.name} ({item.symbol}):{" "}
-              {Math.round(money / item.quotes.USD.price)} 주
-            </li>
-          ))}
-        </ul>
+        </div>
       )}
     </div>
   );
-  // 일정 금액 입력(달러 기준)시 각 코인마다 몇 주를 살 수 있을까?
 }
 
 export default App;
