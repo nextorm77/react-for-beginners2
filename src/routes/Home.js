@@ -26,7 +26,7 @@ function Home() {
     // 신 방식
     getMovies();
   }, []);
-  console.log(movies);
+  //console.log(movies);
   // 요소를 태그로 감싼 배열(map함수 결과)을 자동으로 반복 렌더링?
   return (
     <div>
