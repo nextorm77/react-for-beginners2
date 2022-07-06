@@ -80,3 +80,66 @@ npm i prop-types
 ### 컴포넌트별 css 파일 적용
 
 렌더링된 해당 html 소스 확인하면 랜덤한 class명이 발생 -> 노마드 코더는 좋은 기능이라고 함
+
+### 7.7 Publishing
+
+배포 버전 소스를 github 서비스에 설치(?)하는 패키지 설치
+
+```bash
+npm i gh-pages
+```
+
+웹사이트 production ready coce 생성 스크립트 실행
+
+- production ready code: 코드가 압축되어 최적화 된 상태
+
+```bash
+npm run build
+```
+
+위 스크립트 실행하면 'build' 폴너 내 압출된 파일 생성
+
+- 파일을 열어보면 최적화되어 알아보기 힘든 코드로 변형된 것을 확인 가능
+
+pakeage.json 내 다음 코드 추가
+
+- 현재 프로젝트의 깃허브 리포지토리는 'git remote -v'로 확인
+
+- 전체 주소 확인방법: github의 해당 repository 페이지 상단의 'settings' > 'Pages' 클릭
+
+```javascript
+...
+  },
+  "homepage": "https://[깃허브id].github.io/[현재 프로젝트의 깃허브 repository]"
+}
+```
+
+배포 관련 스크립트 추가
+
+- "npm run deploy" 실행하면 "predeploy"가 먼저 실행되고 자체 스크립트 다음 실행
+
+- "build" 폴더 삭제 후 해당 스크립트 실행
+
+```javascript
+"scripts": {
+    ...
+    "deploy": "gh-pages -d build",
+    "predeploy": "npm run build"
+}
+```
+
+스크립트 실행 후, 해당 웹사이트 주소에 반영되려면 일정 시간 소요
+
+- github의 해당 repository 페이지 상단의 'settings' > 'Pages' 클릭
+
+- 주소 부분의 영역이 적색에서 녹색으로 변경되면 소스 반영 완료
+
+빈 화면으로 나오는 경우 조치 방법
+
+- local 환경이 아니라 github.io 환경에서 배포되므로 route path가 의도와 다르게 설정되어 문제 발생
+
+- 이를 해결하기 위해서 react의 Router component의 basename 속성을 다음과 같이 추가
+
+```javascript
+<Router basename={process.env.PUBLIC_URL}>
+```
