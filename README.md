@@ -77,7 +77,9 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 npm i prop-types
 ```
 
-### 컴포넌트별 css 파일 적용
+### 5.1 Tour of CRA
+
+컴포넌트별 css 파일 적용
 
 렌더링된 해당 html 소스 확인하면 랜덤한 class명이 발생 -> 노마드 코더는 좋은 기능이라고 함
 
@@ -106,6 +108,8 @@ pakeage.json 내 다음 코드 추가
 - 현재 프로젝트의 깃허브 리포지토리는 'git remote -v'로 확인
 
 - 전체 주소 확인방법: github의 해당 repository 페이지 상단의 'settings' > 'Pages' 클릭
+
+- 서비스 루트 주소를 리포지토리 주소가 추가된 형태로 변경하므로, 별도로 언급한대로 Router 컴포넌트의 basename 속성을 추가해야 정상 작동
 
 ```javascript
 ...
