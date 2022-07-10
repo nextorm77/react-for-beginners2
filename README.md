@@ -147,3 +147,14 @@ pakeage.json 내 다음 코드 추가
 ```javascript
 <Router basename={process.env.PUBLIC_URL}>
 ```
+
+## 배포(build 폴더) 버전 실행 방법
+
+간이 웹서버 패키지 설치 및 실행
+
+```bash
+npm i serve
+npx serve -s build
+```
+
+서버 구동시 출력된 화면의 서비스 주소를 ctrl + 클릭
